@@ -1,7 +1,7 @@
 # 1. Introduction
 - Build an AI agent that completes a fixed set of tasks autonomously by deciding in real time whether to use a local model or call a remote model via Fireworks AI credits. The goal: pick the cheapest option every time, without falling below the accuracy threshold.
 
-## 1.1 Scope
+### 1.1 Scope
 - Read JSON inputs.
 - Analyze prompts.
 - Classify tasks.
@@ -18,18 +18,48 @@
 
 # 3. Functional Requirements
 
-## 1. Input Processing.
-## 2. Analyze Prompts.
-## 3. Classify the type of task.
-## 4. Estimate complexity.
-## 5. Routing Decision.
-## 6. Concise Answers.
+### 3.1 Input Processing.
+- Be able to read inputs on a JSON Structure. 
+
+### 3.2 Prompt Extraction.
+- Extract properties of the prompt.
+- This will be used for Functional Requirement 3, to classify the prompt. 
+
+### 3.3 Classify the Prompt.
+- Classify the tasks based on the categories provided:
+    - Factual Knowledge
+    - Mathematical Reasoning
+    - Sentiment Classification
+    - Text Summarisation
+    - Named Entity Recognition
+    - Code Debugging
+    - Logical / Deductive Reasoning
+    - Code Generation
+
+### 3.4 Estimate complexity.
+- Use the outputs of FR 2-3 to determine the complexity of the prompt.
+- Complexity Categorization:
+    - Simple
+    - Medium
+    - Complex
+- Train or use a Prompt Complexity Classifier.
+
+### 3.5 Routing Decision.
+- Be able to determine to use a local model or a Fireworks AI model.
+- This can be based on:
+    - Complexity
+    - Classification
+    - Accuracy/Confidence
+    - Token Cost
+### 3.6 Concise Answers.
+- Use prompt engineering to make the answers more concise and simple.
 
 ---
 
 # 4. Non-Functional Requirements
 
-## 1. Performance.
+### 4.1 Performance.
+- Should be able to provide a more accurate answer and reduce the token usage. 
 
 ---
 
@@ -38,8 +68,14 @@
 ---
 
 # 6. Evaluation
+- This is how the hackathon judges our work.
+### 6.1 Accuracy.
+- Model should provide a higher accuracy/confidence on the generated answer compared to the default usage.
 
-## 1. Accuracy.
-## 2. Token Usage.
-## 3. Waiting Time (Not Judged on the Hackathon).
+### 6.2 Token Usage.
+- Model should consume less tokens compared to the default usage.
+
+### 6.3 Waiting Time (Not Judged on the Hackathon).
+- Not required but good to have.
+- Reduce the thinking time of the model.
 
