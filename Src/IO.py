@@ -16,5 +16,3 @@ def writeResult(results):
 
 def writeResultToFile(results, filename):
     pass
-
-def classify
