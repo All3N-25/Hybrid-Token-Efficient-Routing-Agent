@@ -42,7 +42,7 @@
     - Simple
     - Medium
     - Complex
-- Train or use a Prompt Complexity Classifier.
+- Use Local LLM to classify.
 
 ### 3.5 Routing Decision.
 - Be able to determine to use a local model or a Fireworks AI model.
@@ -70,10 +70,12 @@
 # 6. Evaluation
 - This is how the hackathon judges our work.
 ### 6.1 Accuracy.
-- Model should provide a higher accuracy/confidence on the generated answer compared to the default usage.
+- LLM-Judge evaluates each answer against the expected intent.
+- Submissions below the accuracy threshold are excluded from the leaderboard.
 
 ### 6.2 Token Usage.
-- Model should consume less tokens compared to the default usage.
+- submissions that pass the accuracy gate are ranked ascending by total tokens recorded by the judging proxy. 
+- Fewer tokens = higher rank.
 
 ### 6.3 Waiting Time (Not Judged on the Hackathon).
 - Not required but good to have.
