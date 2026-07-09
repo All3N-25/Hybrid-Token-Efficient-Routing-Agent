@@ -42,7 +42,7 @@
     - Simple
     - Medium
     - Complex
-- Use Local LLM to classify.
+- Use Rule Based To Classify.
 
 ### 3.5 Routing Decision.
 - Be able to determine to use a local model or a Fireworks AI model.
@@ -64,6 +64,44 @@
 ---
 
 # 5. System Architecture
+```
+                  Startup
+                     │
+                     ▼
+        Read Environment Variables
+                     │
+                     ▼
+          Load Allowed Models
+                     │
+                     ▼
+        Read /input/tasks.json
+                     │
+                     ▼
+         For each Prompt in Tasks
+                     │
+                     ▼
+        Prompt Feature Extraction
+                     │
+                     ▼
+         Capability Classifier
+                     │
+                     ▼
+            Complexity Estimator
+                     │
+                     ▼
+             Routing Decision
+          ┌──────────┴──────────┐
+          ▼                     ▼
+    Local Model          Fireworks Model
+          │                     │
+          └──────────┬──────────┘
+                     ▼
+             Collect Responses
+                     ▼
+        Write /output/results.json
+                     ▼
+                 Exit(0)
+```
 
 ---
 
@@ -80,4 +118,3 @@
 ### 6.3 Waiting Time (Not Judged on the Hackathon).
 - Not required but good to have.
 - Reduce the thinking time of the model.
-

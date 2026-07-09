@@ -1,0 +1,34 @@
+[
+  {
+    "task_id": "factual_knowledge_001",
+    "prompt": "Explain in two concise sentences how photosynthesis helps plants create energy."
+  },
+  {
+    "task_id": "mathematical_reasoning_001",
+    "prompt": "A store discounts a $240 jacket by 25%, then adds 8% sales tax to the discounted price. What is the final price? Show the calculation briefly."
+  },
+  {
+    "task_id": "sentiment_classification_001",
+    "prompt": "Classify the sentiment as positive, negative, or neutral, and give one short reason: \"The setup took longer than expected, but the final tool saved me hours and worked flawlessly.\""
+  },
+  {
+    "task_id": "text_summarisation_001",
+    "prompt": "Summarise this paragraph in one sentence: Remote work can reduce commute time and give employees more flexibility, but it can also make collaboration harder when teams do not communicate clearly. Companies that succeed with remote work usually set expectations, document decisions, and create regular opportunities for focused discussion."
+  },
+  {
+    "task_id": "named_entity_recognition_001",
+    "prompt": "Extract and label the named entities as PERSON, ORGANIZATION, LOCATION, or DATE: On March 14, 2026, Maya Chen from OpenAI met Luis Ortega at Stanford University in Palo Alto."
+  },
+  {
+    "task_id": "code_debugging_001",
+    "prompt": "Find the bug in this Python function and provide a corrected version:\n\n```python\ndef average(numbers):\n    total = 0\n    for n in numbers:\n        total += n\n    return total / len(total)\n```"
+  },
+  {
+    "task_id": "logical_reasoning_001",
+    "prompt": "Solve the logic puzzle: Alice, Ben, and Clara each own one pet: a cat, a dog, or a bird. Alice does not own the dog. Ben does not own the cat. Clara owns the bird. Who owns each pet?"
+  },
+  {
+    "task_id": "code_generation_001",
+    "prompt": "Write a Python function slugify(text) that lowercases the input, replaces runs of non-alphanumeric characters with a single hyphen, and removes leading or trailing hyphens."
+  }
+]
