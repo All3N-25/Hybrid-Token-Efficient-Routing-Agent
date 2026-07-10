@@ -1,6 +1,6 @@
 from IO import readTask, writeResult
 from Classifier import classify_prompt
-
+from Src.DataClass.Task import Task
 
 if __name__ == "__main__":
     print("Simple Hybrid Token Routing Agent is running.")
@@ -8,18 +8,16 @@ if __name__ == "__main__":
 
     tasks = readTask()
 
-    if tasks:
-        print(f"Total tasks read: {len(tasks)}")
-        results = []
-        for task in tasks:
-            prompt = task.get("prompt", "")
-            classification = classify_prompt(prompt)
-            results.append({
-                "task_id": task.get("task_id"),
-                "category": classification["category"],
-                "difficulty": classification["difficulty"]
-            })
-        writeResult(results)
-        print("Results written to ./Output/Results.json"
-        )
+    if not tasks:
+        print("No tasks to process.")
+        exit()
 
+    for task in tasks:
+        prompt = task.get("prompt", "")
+        classification = classify_prompt(prompt)
+        classified_task = Task(
+            task_id=task.get("task_id"),
+            prompt=prompt,
+            categories=classification["categories"],
+            complexity=classification["complexity"]
+            )

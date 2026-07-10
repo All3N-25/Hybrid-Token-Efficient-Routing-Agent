@@ -1,7 +1,4 @@
-"""
-Classify the Category of the prompt.
-Classify the Difficulty of the prompt.
-"""
+"""Classify a prompt's categories and complexity."""
 
 import re
 
@@ -51,29 +48,30 @@ def _has_any(text, words):
     return any(word in text for word in words)
 
 
-def classify_category(prompt):
+def classify_categories(prompt):
     text = prompt.lower()
     has_code = bool(_CODE_FENCE.search(prompt) or _BARE_CODE_LINE.search(prompt))
+    categories = []
 
     if has_code and _has_any(text, _DEBUG_WORDS):
-        return "Code Debugging"
+        categories.append("Code Debugging")
     if _CODE_REQUEST.search(text) or _has_any(text, _CODE_WORDS):
-        return "Code Generation"
-    if _MATH_EXPR.search(prompt) or (_NUMBER.search(prompt) and _has_any(text, _MATH_WORDS)):
-        return "Mathematical Reasoning"
+        categories.append("Code Generation")
+    if _MATH_EXPR.search(prompt) or (not has_code and _NUMBER.search(prompt) and _has_any(text, _MATH_WORDS)):
+        categories.append("Mathematical Reasoning")
     if _has_any(text, _LOGIC_WORDS):
-        return "Logical / Deductive Reasoning"
+        categories.append("Logical / Deductive Reasoning")
     if _has_any(text, _NER_WORDS) or (_has_any(text, _NER_ACTION_WORDS) and _has_any(text, _NER_ENTITY_WORDS)):
-        return "Named Entity Recognition"
+        categories.append("Named Entity Recognition")
     if _has_any(text, _SENTIMENT_WORDS):
-        return "Sentiment Classification"
+        categories.append("Sentiment Classification")
     if _has_any(text, _SUMMARY_WORDS):
-        return "Text Summarisation"
-    return "Factual Knowledge"
+        categories.append("Text Summarisation")
+    return categories or ["Factual Knowledge"]
 
 
-def classify_difficulty(prompt, category=None):
-    category = category or classify_category(prompt)
+def classify_complexity(prompt, categories=None):
+    categories = categories or classify_categories(prompt)
     words = len(prompt.split())
     score = 0
 
@@ -81,13 +79,15 @@ def classify_difficulty(prompt, category=None):
         score += 1
     if words > 300:
         score += 1
-    if category in {
+    if any(category in {
         "Mathematical Reasoning",
         "Code Debugging",
         "Code Generation",
         "Logical / Deductive Reasoning",
-    }:
+    } for category in categories):
         score += 2
+    if len(categories) > 1:
+        score += 1
     if _CODE_FENCE.search(prompt) or _BARE_CODE_LINE.search(prompt):
         score += 1
     if _MATH_EXPR.search(prompt):
@@ -97,16 +97,14 @@ def classify_difficulty(prompt, category=None):
     if _has_any(prompt.lower(), ("exactly", "must", "cannot", "only if", "format", "json", "table")):
         score += 1
 
-    if score <= 1:
+    if score <= 5:
         return "Simple"
-    if score <= 3:
-        return "Medium"
     return "Complex"
 
 
 def classify_prompt(prompt):
-    category = classify_category(prompt)
+    categories = classify_categories(prompt)
     return {
-        "category": category,
-        "difficulty": classify_difficulty(prompt, category),
+        "categories": categories,
+        "complexity": classify_complexity(prompt, categories),
     }

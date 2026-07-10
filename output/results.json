@@ -1,0 +1,58 @@
+[
+    {
+        "task_id": "factual_knowledge_001",
+        "categories": [
+            "Factual Knowledge"
+        ],
+        "complexity": "Simple"
+    },
+    {
+        "task_id": "mathematical_reasoning_001",
+        "categories": [
+            "Mathematical Reasoning"
+        ],
+        "complexity": "Medium"
+    },
+    {
+        "task_id": "sentiment_classification_001",
+        "categories": [
+            "Sentiment Classification"
+        ],
+        "complexity": "Simple"
+    },
+    {
+        "task_id": "text_summarisation_001",
+        "categories": [
+            "Text Summarisation"
+        ],
+        "complexity": "Simple"
+    },
+    {
+        "task_id": "named_entity_recognition_001",
+        "categories": [
+            "Named Entity Recognition"
+        ],
+        "complexity": "Simple"
+    },
+    {
+        "task_id": "code_debugging_001",
+        "categories": [
+            "Code Debugging"
+        ],
+        "complexity": "Medium"
+    },
+    {
+        "task_id": "logical_reasoning_001",
+        "categories": [
+            "Logical / Deductive Reasoning"
+        ],
+        "complexity": "Medium"
+    },
+    {
+        "task_id": "code_generation_001",
+        "categories": [
+            "Code Generation"
+        ],
+        "complexity": "Medium"
+    }
+]

@@ -40,7 +40,6 @@
 - Use the outputs of FR 2-3 to determine the complexity of the prompt.
 - Complexity Categorization:
     - Simple
-    - Medium
     - Complex
 - Use Rule Based To Classify.
 
