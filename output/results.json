@@ -1,58 +1,50 @@
 [
     {
         "task_id": "factual_knowledge_001",
-        "categories": [
-            "Factual Knowledge"
-        ],
-        "complexity": "Simple"
+        "answer": null
     },
     {
         "task_id": "mathematical_reasoning_001",
-        "categories": [
-            "Mathematical Reasoning"
-        ],
-        "complexity": "Medium"
+        "answer": "Discount: 240 × 0.25 = 60\nDiscounted price: 240 − 60 = 180\nTax: 180 × 0.08 = 14.40\nFinal price: 180 + 14.40 = **$194.40**"
     },
     {
         "task_id": "sentiment_classification_001",
-        "categories": [
-            "Sentiment Classification"
-        ],
-        "complexity": "Simple"
+        "answer": null
     },
     {
         "task_id": "text_summarisation_001",
-        "categories": [
-            "Text Summarisation"
-        ],
-        "complexity": "Simple"
+        "answer": null
     },
     {
         "task_id": "named_entity_recognition_001",
-        "categories": [
-            "Named Entity Recognition"
-        ],
-        "complexity": "Simple"
+        "answer": null
     },
     {
         "task_id": "code_debugging_001",
-        "categories": [
-            "Code Debugging"
-        ],
-        "complexity": "Medium"
+        "answer": "Bug: `len(total)` is invalid because `total` is an int, not a sequence. It should be `len(numbers)`.\n\n```python\ndef average(numbers):\n    if not numbers:\n        return 0\n    total = 0\n    for n in numbers:\n        total += n\n    return total / len(numbers)\n```"
     },
     {
         "task_id": "logical_reasoning_001",
-        "categories": [
-            "Logical / Deductive Reasoning"
-        ],
-        "complexity": "Medium"
+        "answer": "Alice - cat, Ben - dog, Clara - bird"
     },
     {
         "task_id": "code_generation_001",
-        "categories": [
-            "Code Generation"
-        ],
-        "complexity": "Medium"
+        "answer": "```python\nimport re\n\ndef slugify(text):\n    return re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')\n```"
+    },
+    {
+        "task_id": "complex_financial_reasoning_001",
+        "answer": "Emergency reserve: 0.15 × 120,000 = 18,000\nInfrastructure: 28,000\nRemainder: 120,000 − 18,000 − 28,000 = 74,000\nEngineering (3/5): 0.6 × 74,000 = 44,400\nMarketing (2/5): 0.4 × 74,000 = 29,600\n\nConstraint check: Marketing = 29,600 ≥ 25,000 ✓\n\nAll constraints satisfied. No additional budget required.\n\n| Allocation | Amount ($) |\n|---|---|\n| Emergency reserve (15%) | 18,000 |\n| Infrastructure | 28,000 |\n| Engineering (3/5) | 44,400 |\n| Marketing (2/5) | 29,600 |\n| **Total** | **120,000** |"
+    },
+    {
+        "task_id": "complex_code_debugging_001",
+        "answer": "Problems\n\n- Late-binding closure bug: `lambda: results.append(fetch(url))` captures the loop variable `url` by reference, not by value. By the time the worker threads run, `url` is the last value from the loop, so most or all fetches may use the same URL.\n- Lost/discarded futures: `pool.submit` returns a `Future`, but it is thrown away. Exceptions raised by `fetch` are stored in the future and never re-raised, so errors are silently swallowed.\n- Shared mutable list with nondeterministic order: multiple worker threads append to `results` as they finish. The final order depends on completion order, not input order, and the result list can contain duplicates due to the closure bug.\n- No explicit ordering or synchronization: the function relies on side effects in a shared list instead of collecting results per URL in input order.\n\nRace condition explanation\n\nThe loop submits lambdas that all share the same `url` variable. When the thread pool executes them concurrently, `url` has already advanced to its final value, causing the workers to race against the same (or stale) URL. At the same time, the workers race to append to `results`; because appends happen as fetches complete, the output order is arbitrary and unrelated to the original `urls` order.\n\nCorrected code\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef fetch_all(urls, fetch):\n    with ThreadPoolExecutor(max_workers=4) as pool:\n        futures = [pool.submit(fetch, url) for url in urls]\n        return [future.result() for future in futures]\n```"
+    },
+    {
+        "task_id": "complex_logical_reasoning_001",
+        "answer": "**Solution**\n\n| Developer | Service | Slot |\n|-----------|---------|------|\n| Ari | Cache | 2 |\n| Bea | API | 1 |\n| Chen | Database | 3 |\n| Dev | Billing | 4 |\n\n**Constraint check**\n\n| Constraint | Status |\n|------------|--------|\n| Each developer gets exactly one service | ✓ |\n| Each service used exactly once | ✓ |\n| Each slot 1–4 used exactly once | ✓ |\n| API before Billing (slot 1 < slot 4) | ✓ |\n| Bea ≠ Cache, Bea ≠ slot 1 | ✓ (Bea has API in slot 1) |\n| Chen immediately after Database (slot 3 = slot 2+1) | ✓ |\n| Dev in slot 4 | ✓ |\n| Ari ≠ API, Ari ≠ Database | ✓ (Ari has Cache) |\n| Cache in slot 2 | ✓ |\n| First + last slots: 1 + 3 = 4 | ✓ |\n\n**Uniqueness:** The assignment is forced. Cache must be slot 2, so Ari (who cannot do API or Database) takes Cache. Dev is fixed in slot 4. Database must be in slot 3 (immediately before Chen), so Chen takes Database in slot 3. Bea cannot use slot 1, leaving slot 1 for the remaining developer-service pair; Bea takes API in slot 1, and Dev takes Billing in slot 4. No alternative exists."
+    },
+    {
+        "task_id": "complex_code_generation_001",
+        "answer": "```python\nimport json\nfrom typing import List, Tuple, Dict\n\ndef allocate_batches(\n    items: List[Tuple[str, int]],\n    workers: int\n) -> Dict[str, List[Tuple[str, int]]]:\n    # Validate inputs\n    if not isinstance(workers, int) or workers <= 0:\n        raise ValueError(\"workers must be a positive integer\")\n    if not isinstance(items, list):\n        raise ValueError(\"items must be a list of (name, weight) tuples\")\n    if len(items) == 0:\n        raise ValueError(\"items must not be empty\")\n\n    # Deep copy to avoid mutating inputs\n    items_copy = [(name, weight) for name, weight in items]\n\n    # Validate each item\n    for item in items_copy:\n        if not isinstance(item, tuple) or len(item) != 2:\n            raise ValueError(\"each item must be a (name, weight) tuple\")\n        name, weight = item\n        if not isinstance(name, str):\n            raise ValueError(\"item name must be a string\")\n        if not isinstance(weight, int) or weight <= 0:\n            raise ValueError(\"item weight must be a positive integer\")\n\n    # Sort items: heaviest first, then by name for deterministic tie-breaking\n    sorted_items = sorted(items_copy, key=lambda x: (-x[1], x[0]))\n\n    # Initialize worker state\n    worker_names = [f\"worker_{i}\" for i in range(workers)]\n    worker_totals = [0] * workers\n    worker_assignments: Dict[str, List[Tuple[str, int]]] = {\n        wn: [] for wn in worker_names\n    }\n\n    # Greedy assignment\n    for name, weight in sorted_items:\n        # Find worker with smallest total, break ties by index\n        min_idx = 0\n        min_total = worker_totals[0]\n        for i in range(1, workers):\n            if worker_totals[i] < min_total:\n                min_total = worker_totals[i]\n                min_idx = i\n        worker_assignments[worker_names[min_idx]].append((name, weight))\n        worker_totals[min_idx] += weight\n\n    return worker_assignments\n\n\n# ---- Assert-based checks ----\n\n# Check 1: balanced distribution for 2*3=6 across 3 workers\nresult1 = allocate_batches([(\"a\", 3), (\"b\", 3)], 3)\ntotals1 = [sum(w for _, w in v) for v in result1.values()]\nassert max(totals1) - min(totals1) <= 1, f\"unbalanced: {totals1}\"\nassert sum(totals1) == 6, f\"total weight mismatch: {totals1}\"\n\n# Check 2: input immutability\noriginal_items = [(\"x\", 5), (\"y\", 2)]\noriginal_workers = 2\nsnapshot_items = list(original_items)\nallocate_batches(original_items, original_workers)\nassert original_items == snapshot_items, \"items list was mutated\"\n\n# Check 3: invalid input rejection\ntry:\n    allocate_batches([(\"bad\", -1)], 2)\n    assert False, \"should have raised on negative weight\"\nexcept ValueError:\n    pass\ntry:\n    allocate_batches([(\"ok\", 1)], 0)\n    assert False, \"should have raised on zero workers\"\nexcept ValueError:\n    pass\n```"
     }
 ]

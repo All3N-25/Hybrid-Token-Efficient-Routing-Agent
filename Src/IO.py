@@ -4,10 +4,12 @@ Write Outputs On ./Output/Results.json
 """
 
 import json
+import os
 
 def readTask():
+    input_path = os.environ.get("INPUT_PATH", "../input/tasks.json")
     try:
-        with open("./input/tasks.json", encoding="utf-8") as file:
+        with open(input_path, encoding="utf-8") as file:
             tasks = json.load(file)
 
             if not isinstance(tasks, list):
@@ -24,12 +26,13 @@ def readTask():
             return tasks
         
     except FileNotFoundError:
-        print("Error: Input file './input/tasks.json' not found.")
+        print(f"Error: Input file '{input_path}' not found.")
         return []
     except ValueError as ve:
         print(f"Error: {ve}")
         return []
 
 def writeResult(results):
-    with open('./output/results.json', 'w', encoding="utf-8") as file:
+    output_path = os.environ.get("OUTPUT_PATH", "../output/results.json")
+    with open(output_path, 'w', encoding="utf-8") as file:
         json.dump(results, file, indent=4, ensure_ascii=False)

@@ -30,5 +30,21 @@
   {
     "task_id": "code_generation_001",
     "prompt": "Write a Python function slugify(text) that lowercases the input, replaces runs of non-alphanumeric characters with a single hyphen, and removes leading or trailing hyphens."
+  },
+  {
+    "task_id": "complex_financial_reasoning_001",
+    "prompt": "A startup has a $120,000 annual operating budget. It must reserve exactly 15% for emergencies, pay $28,000 for infrastructure, and divide the remainder between engineering and marketing in a 3:2 ratio. Marketing cannot receive less than $25,000. Calculate every allocation, determine whether all constraints can be satisfied, and if they cannot, compute the smallest additional budget required. Show the equations, including 3 + 2 = 5, and return the final result as a concise table."
+  },
+  {
+    "task_id": "complex_code_debugging_001",
+    "prompt": "Find every correctness and concurrency bug in this Python function, explain how the race condition occurs, and implement a corrected function that must preserve input order and cannot return before all work completes:\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef fetch_all(urls, fetch):\n    results = []\n    with ThreadPoolExecutor(max_workers=4) as pool:\n        for url in urls:\n            pool.submit(lambda: results.append(fetch(url)))\n    return results\n```\n\nReturn exactly two sections: `Problems` and `Corrected code`."
+  },
+  {
+    "task_id": "complex_logical_reasoning_001",
+    "prompt": "Four developers—Ari, Bea, Chen, and Dev—must each deploy exactly one service: API, Billing, Cache, or Database, in exactly one time slot from 1 through 4. The API must deploy before Billing. Bea cannot deploy Cache or use slot 1. Chen deploys immediately after the Database service. Dev uses slot 4. Ari deploys neither API nor Database. The Cache service is deployed in slot 2. Determine the unique developer, service, and slot assignments. Verify every constraint in a table and state whether any alternative solution exists; use the check 1 + 3 = 4 when comparing the first and last slots."
+  },
+  {
+    "task_id": "complex_code_generation_001",
+    "prompt": "Write a Python function allocate_batches(items, workers) that assigns weighted items to workers using a deterministic greedy strategy. Each item is a tuple of `(name, weight)`, every weight must be a positive integer, workers must be greater than zero, and the function cannot mutate its inputs. At each step assign the next heaviest item to the worker with the smallest current total; break ties by worker index and item name. For example, 2 * 3 = 6 should remain balanced across three workers when possible. Return JSON-compatible lists, include type hints, validate invalid inputs, and provide exactly three assert-based checks without using third-party packages."
   }
 ]

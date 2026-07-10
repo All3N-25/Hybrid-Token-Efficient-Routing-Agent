@@ -97,7 +97,7 @@ def classify_complexity(prompt, categories=None):
     if _has_any(prompt.lower(), ("exactly", "must", "cannot", "only if", "format", "json", "table")):
         score += 1
 
-    if score <= 5:
+    if score <= 4:
         return "Simple"
     return "Complex"
 

@@ -1,26 +1,92 @@
 """
-Connects to the Fireworks API.
+Generate answers with the Fireworks API.
 """
 
+import json
 import os
- 
-api_key    = os.environ["FIREWORKS_API_KEY"]   # provided by harness — do not use your own 
-base_url   = os.environ["FIREWORKS_BASE_URL"]  # route ALL Fireworks calls through this URL 
-models     = os.environ["ALLOWED_MODELS"].split(",")  # exact model IDs published on launch day
 
-_Default_Plugin = "You are a Precise and Concise AI Assistant. You will only do as you are told. You will be given a prompt and you will respond with a concise and precise answer. You will not include any additional information or context. You will not include any disclaimers or warnings. You will not include any explanations or reasoning. You will not include any examples or analogies. You will not include any references or citations. You will not include any opinions or personal beliefs. You will not include any jokes or humor. You will not include any greetings or sign-offs. You will not include any questions or requests for clarification. You will not include any apologies or regrets. You will not include any expressions of gratitude or appreciation. You will not include any expressions of excitement or enthusiasm. You will not include any expressions of sadness or disappointment. You will not include any expressions of anger or frustration. You will not include any expressions of confusion or uncertainty. You will not include any expressions of surprise or shock. You will not include any expressions of fear or anxiety. You will not include any expressions of love or affection. You will not include any expressions of hate or disgust. You will not include any expressions of hope or optimism. You will not include any expressions of despair or pessimism."
+from urllib.error import URLError
+from urllib.request import Request, urlopen
+from aiohttp.web_exceptions import HTTPError
 
-def generate(prompt: str, model: str = "fireworks-1", plugin: str = _Default_Plugin) -> str:
-    """
-    Generates a response from the Fireworks API.
+import fireworks.client
+
+fireworks.client.api_key = os.environ["FIREWORKS_API_KEY"]
+api_key    = os.environ["FIREWORKS_API_KEY"]
+base_url   = os.environ["FIREWORKS_BASE_URL"]
+models     = os.environ["ALLOWED_MODELS"].split(",")
+
+CATEGORY_MODEL_MAP = {
+    "minimax-m3":       {"Factual Knowledge", "Mathematical Reasoning", "Logical/Deductive Reasoning", "Text Summarisation"},
+    "kimi-k2p7-code":   {"Code Debugging", "Code Generation", "Sentiment Classification", "Named Entity Recognition"},
+}
+DEFAULT_MODEL = "minimax-m3"
+
+def select_model(categories: list[str]) -> str:
+    # Only selects the model that matches the first category.
+    cat_set = set(categories)
+    for model_name, model_categories in CATEGORY_MODEL_MAP.items():
+        if cat_set & model_categories:
+            if model_name not in models:
+                raise RuntimeError(f"{model_name} not in ALLOWED_MODELS")
+            return model_name
+    return DEFAULT_MODEL
+
+def generate(prompt: str, categories: list[str]) -> str:
+    if not models:
+        raise RuntimeError("ALLOWED_MODELS is empty")
+
+    model = select_model(categories)
+
+    payload = {
+        "model": f"accounts/fireworks/models/{model}",
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "Answer accurately and concisely. Return only the requested "
+                    "answer. Avoid unnecessary Markdown headings, bold text, "
+                    "LaTeX, explanations, or routing metadata because they "
+                    "consume Fireworks tokens. Code answers may contain normal "
+                    "source code with newline characters inside the string."
+                ),
+            },
+            {"role": "user", "content": prompt},
+        ],
+        "temperature": 0,
+        "max_tokens": 8192,
+    }
+    if "minimax-m3" in model:
+        payload["thinking"] = {"type": "disabled"}
+        
+    print("MODEL SELECTED:", payload["model"])
     
-    Args:
-        prompt (str): The input prompt to send to the API.
-        model (str): The model to use for generation. Defaults to "fireworks-1".
-        plugin (str): The plugin to use for generation. Defaults to _Default_Plugin.
-    
-    Returns:
-        str: The generated response from the API.
-    """
-    # Implementation of the API call goes here
-    pass
+    request = Request(
+        f"{base_url}/chat/completions",
+        data=json.dumps(payload).encode(),
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+
+    print("URL:", request.full_url)
+
+    try:
+        with urlopen(request, timeout=120) as response:
+            body = json.load(response)
+    except HTTPError as e:          # must come BEFORE URLError
+        err_body = e.read().decode(errors="replace")
+        raise RuntimeError(f"Fireworks API error {e.code}: {err_body}") from e
+    except URLError as e:
+        raise RuntimeError(f"Failed to reach Fireworks API: {e.reason}") from e
+
+    choice = body["choices"][0]
+    answer = choice["message"].get("content")
+
+    if not isinstance(answer, str) or not answer.strip():
+        raise RuntimeError(
+            f"Fireworks returned no final answer (finish_reason={choice.get('finish_reason')})"
+        )
+    return answer.strip()

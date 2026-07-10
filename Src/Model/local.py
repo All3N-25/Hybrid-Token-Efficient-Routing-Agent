@@ -1,3 +1,3 @@
 """
-Connects to the Local LLM.
+Connects to the Local LLM hosted by AMD.
 """
