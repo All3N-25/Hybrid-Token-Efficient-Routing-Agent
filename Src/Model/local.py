@@ -1,4 +1,4 @@
-"""Generate answers with the Qwen2 model bundled in the container."""
+"""Generate answers with the Qwen3 model bundled in the container."""
 
 import os
 from functools import lru_cache
@@ -9,7 +9,7 @@ from llama_cpp import Llama
 @lru_cache(maxsize=1)
 def _model() -> Llama:
     return Llama(
-        model_path=os.environ.get("LOCAL_MODEL_PATH", "/models/qwen2.gguf"),
+        model_path=os.environ.get("LOCAL_MODEL_PATH", "/models/qwen3.gguf"),
         n_ctx=int(os.environ.get("LOCAL_MODEL_CONTEXT", "4096")),
         n_threads=int(os.environ.get("LOCAL_MODEL_THREADS", "4")),
         verbose=False,
@@ -19,7 +19,7 @@ def _model() -> Llama:
 def generate(prompt: str) -> str:
     response = _model().create_chat_completion(
         messages=[
-            {"role": "system", "content": "Answer accurately and concisely. Return only the requested answer."},
+            {"role": "system", "content": "Answer accurately and concisely. Return only the requested answer. /no_think"},
             {"role": "user", "content": prompt},
         ],
         temperature=0,
