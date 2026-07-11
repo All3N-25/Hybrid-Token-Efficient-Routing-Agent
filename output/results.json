@@ -1,50 +1,74 @@
 [
     {
-        "task_id": "factual_knowledge_001",
-        "answer": "Photosynthesis is a process through which plants convert light energy from the sun into chemical energy stored in glucose, a sugar. This conversion occurs using chlorophyll in the leaves, which captures sunlight, carbon dioxide from the air, and water from the soil, transforming these into glucose and oxygen."
+        "task_id": "math-1",
+        "answer": "5888",
+        "model": "minimax-m3",
+        "provider": "fireworks"
     },
     {
-        "task_id": "mathematical_reasoning_001",
-        "answer": "Discount: 240 × 0.25 = 60\nDiscounted price: 240 − 60 = 180\nTax: 180 × 0.08 = 14.40\nFinal price: 180 + 14.40 = **$194.40**"
+        "task_id": "math-2",
+        "answer": "84 rupees",
+        "model": "minimax-m3",
+        "provider": "fireworks"
     },
     {
-        "task_id": "sentiment_classification_001",
-        "answer": "Positive, because the final tool compensated for the initial inconvenience by saving hours of work and functioning flawlessly."
+        "task_id": "math-3",
+        "answer": "20",
+        "model": "minimax-m3",
+        "provider": "fireworks"
     },
     {
-        "task_id": "text_summarisation_001",
-        "answer": "Remote work enhances flexibility and reduces commute time but poses challenges in collaboration, which successful companies mitigate by setting clear expectations, documenting decisions, and fostering regular, focused discussions among team members."
+        "task_id": "mcq-1",
+        "answer": "<think>\n\n</think>\n\nB) 17",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
     },
     {
-        "task_id": "named_entity_recognition_001",
-        "answer": "- March 14, 2026: DATE\n- Maya Chen: PERSON\n- OpenAI: ORGANIZATION\n- Luis Ortega: PERSON\n- Stanford University: LOCATION\n- Palo Alto: LOCATION"
+        "task_id": "mcq-2",
+        "answer": "<think>\n\n</think>\n\nC) Au",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
     },
     {
-        "task_id": "code_debugging_001",
-        "answer": "```python\ndef average(numbers):\n    if not numbers:\n        return 0\n    total = 0\n    for n in numbers:\n        total += n\n    return total / len(numbers)\n```"
+        "task_id": "qa-1",
+        "answer": "<think>\n\n</think>\n\nTokyo",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
     },
     {
-        "task_id": "logical_reasoning_001",
-        "answer": "Clara owns the bird. Since Alice doesn't own the dog and Ben doesn't own the cat, and Clara has the bird, Alice must own the cat and Ben must own the dog."
+        "task_id": "qa-2",
+        "answer": "<think>\n\n</think>\n\nMars",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
     },
     {
-        "task_id": "code_generation_001",
-        "answer": "```python\nimport re\n\ndef slugify(text):\n    return re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')\n```"
+        "task_id": "extract-1",
+        "answer": "<think>\n\n</think>\n\n1998, 2004, 2015",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
     },
     {
-        "task_id": "complex_financial_reasoning_001",
-        "answer": "**Step 1: Emergency reserve**\n0.15 × 120,000 = 18,000\n\n**Step 2: Remainder after emergency + infrastructure**\n120,000 − 18,000 − 28,000 = 74,000\n\n**Step 3: Split remainder in 3:2 ratio (3 + 2 = 5)**\nEngineering = (3/5) × 74,000 = 44,400\nMarketing = (2/5) × 74,000 = 29,600\n\n**Step 4: Check marketing constraint**\n29,600 ≥ 25,000 ✓\n\nAll constraints satisfied. No additional budget required.\n\n| Allocation | Amount ($) |\n|---|---|\n| Emergency reserve (15%) | 18,000 |\n| Infrastructure | 28,000 |\n| Engineering (3/5) | 44,400 |\n| Marketing (2/5) | 29,600 |\n| **Total** | **120,000** |"
+        "task_id": "code-1",
+        "answer": "def add(a, b):\n    return a + b",
+        "model": "kimi-k2p7-code",
+        "provider": "fireworks"
     },
     {
-        "task_id": "complex_code_debugging_001",
-        "answer": "Problems\n\n- Late-binding closure bug: `lambda` captures the loop variable `url` by reference, so by the time a worker runs, `url` is usually the last value (or a later value), causing most or all tasks to fetch the wrong URL.\n- Unordered results: appending to a shared `results` list from worker threads records values in completion order, not submission order, so the returned list does not preserve `urls` order.\n- Swallowed exceptions / missing entries: because the returned `Future` objects are discarded, any exception from `fetch` is never observed; the failed task simply never appends, producing an incomplete list.\n- Shared mutable state race: multiple threads concurrently call `results.append(...)`. While CPython makes a single `append` atomic, relying on a shared list across threads is a concurrency bug and not guaranteed by the language.\n\nThe race condition occurs because the closure references the same `url` variable while worker threads run at unpredictable times, and they all write into the same `results` list without synchronization or ordering, producing overlapping, out-of-order, and possibly incomplete output.\n\nCorrected code\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef fetch_all(urls, fetch):\n    with ThreadPoolExecutor(max_workers=4) as pool:\n        futures = [pool.submit(fetch, url) for url in urls]\n        return [future.result() for future in futures]\n```"
+        "task_id": "summary-1",
+        "answer": "<think>\n\n</think>\n\nPhotosynthesis is the process by which green plants use sunlight to convert carbon dioxide and water into food, releasing oxygen as a byproduct.",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
     },
     {
-        "task_id": "complex_logical_reasoning_001",
-        "answer": "**Solution**\n\n| Developer | Service | Slot |\n|-----------|---------|------|\n| Ari | Cache | 2 |\n| Bea | API | 1 |\n| Chen | Billing | 4 |\n| Dev | Database | 3 |\n\n**Constraint check**\n\n| Constraint | Status |\n|------------|--------|\n| Each developer gets exactly one service | ✓ |\n| Each service used exactly once | ✓ |\n| Each slot 1–4 used exactly once | ✓ |\n| API before Billing (slot 1 < slot 4) | ✓ |\n| Bea ≠ Cache, Bea ≠ slot 1 | ✓ (Bea has API in slot 1) |\n| Chen immediately after Database (slot 4 = slot 3 + 1) | ✓ |\n| Dev = slot 4 | ✓ |\n| Ari ≠ API, Ari ≠ Database | ✓ (Ari has Cache) |\n| Cache in slot 2 | ✓ |\n| 1 + 3 = 4 (first slot + third slot = last slot) | ✓ (1 + 3 = 4) |\n\n**Uniqueness:** No alternative solution exists. The Cache-in-slot-2 and Dev-in-slot-4 anchors, combined with Chen-follows-Database and Ari's exclusions, force this single assignment."
+        "task_id": "qa-3",
+        "answer": "<think>\n\n</think>\n\nThere are seven continents on Earth.",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
     },
     {
-        "task_id": "complex_code_generation_001",
-        "answer": "```python\nimport json\nfrom typing import List, Tuple, Dict, Any\n\n\ndef allocate_batches(\n    items: List[Tuple[str, int]],\n    workers: int,\n) -> List[List[Tuple[str, int]]]:\n    \"\"\"Assign weighted items to workers using a deterministic greedy strategy.\n\n    Each item is a (name, weight) tuple. At every step the heaviest remaining\n    item is assigned to the worker with the smallest current total weight.\n    Ties are broken by worker index (lower first) and then by item name\n    (lexicographically smaller first). Inputs are not mutated.\n\n    Returns a JSON-compatible list of lists of [name, weight] pairs.\n    \"\"\"\n    # --- validation ---\n    if not isinstance(workers, int) or isinstance(workers, bool):\n        raise TypeError(\"workers must be an integer\")\n    if workers <= 0:\n        raise ValueError(\"workers must be greater than zero\")\n\n    if not isinstance(items, list):\n        raise TypeError(\"items must be a list of (name, weight) tuples\")\n\n    # snapshot inputs so we never mutate the caller's data\n    snapshot_items = list(items)\n\n    for entry in snapshot_items:\n        if not isinstance(entry, tuple) or len(entry) != 2:\n            raise TypeError(\"each item must be a (name, weight) tuple\")\n        name, weight = entry\n        if not isinstance(name, str):\n            raise TypeError(\"item name must be a string\")\n        if not isinstance(weight, int) or isinstance(weight, bool):\n            raise TypeError(\"item weight must be an integer\")\n        if weight <= 0:\n            raise ValueError(\"item weight must be a positive integer\")\n\n    # --- deterministic sort: heaviest first, then name ascending ---\n    ordered = sorted(snapshot_items, key=lambda x: (-x[1], x[0]))\n\n    # --- greedy assignment ---\n    buckets: List[List[Tuple[str, int]]] = [[] for _ in range(workers)]\n    totals: List[int] = [0] * workers\n\n    for name, weight in ordered:\n        # pick worker with smallest total, break ties by index\n        chosen = 0\n        for i in range(1, workers):\n            if totals[i] < totals[chosen]:\n                chosen = i\n        buckets[chosen].append((name, weight))\n        totals[chosen] += weight\n\n    # JSON-compatible output\n    return [[list(pair) for pair in bucket] for bucket in buckets]\n\n\n# ---------------------------------------------------------------------------\n# Exactly three assert-based checks (no third-party packages)\n# ---------------------------------------------------------------------------\n\n# 1. Balanced distribution: 2 * 3 = 6 across three workers\nresult = allocate_batches([(\"a\", 3), (\"b\", 3)], 3)\ntotals = [sum(w for _, w in bucket) for bucket in result]\nassert totals == [3, 3, 0], f\"expected balanced totals, got {totals}\"\n\n# 2. Deterministic tie-breaking by worker index and item name\nresult = allocate_batches(\n    [(\"z\", 2), (\"a\", 2), (\"m\", 2), (\"b\", 2)],\n    2,\n)\n# Heaviest items first (all weight 2, sorted by name): a, b, m, z\n# Worker 0 gets first two (a, b), worker 1 gets next two (m, z)\nassert result == [\n    [[\"a\", 2], [\"b\", 2]],\n    [[\"m\", 2], [\"z\", 2]],\n], f\"unexpected tie-breaking result: {result}\"\n\n# 3. Input immutability and JSON serializability\noriginal_items = [(\"x\", 5), (\"y\", 1)]\noriginal_workers = 2\nsnapshot_items = list(original_items)\nout = allocate_batches(original_items, original_workers)\nassert original_items == snapshot_items, \"items list was mutated\"\nassert original_workers == 2, \"workers value was mutated\"\n# Must be serializable to JSON without errors\njson.dumps(out)\n```"
+        "task_id": "general-1",
+        "answer": "<think>\n\n</think>\n\nbonjour",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
     }
 ]

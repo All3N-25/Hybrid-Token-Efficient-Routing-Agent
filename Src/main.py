@@ -12,7 +12,7 @@ FIREWORKS_CATEGORIES = {
 }
 
 
-def answer_task(task: Task) -> str:
+def answer_task(task: Task) -> dict[str, str]:
     if task.complexity == "Complex" or FIREWORKS_CATEGORIES.intersection(task.categories):
         return fireworks.generate(task.prompt, task.categories)
     if task.complexity == "Simple":
@@ -47,7 +47,7 @@ if __name__ == "__main__":
         # )
         results.append({
             "task_id": classified_task.task_id,
-            "answer": answer_task(classified_task),
+            **answer_task(classified_task),
         })
 
     writeResult(results)

@@ -34,7 +34,7 @@ def select_model(categories: list[str]) -> str:
             return model_name
     return DEFAULT_MODEL
 
-def generate(prompt: str, categories: list[str]) -> str:
+def generate(prompt: str, categories: list[str]) -> dict[str, str]:
     global fireworks_tokens_used
     if not models:
         raise RuntimeError("ALLOWED_MODELS is empty")
@@ -94,4 +94,8 @@ def generate(prompt: str, categories: list[str]) -> str:
         raise RuntimeError(
             f"Fireworks returned no final answer (finish_reason={choice.get('finish_reason')})"
         )
-    return answer.strip()
+    return {
+        "answer": answer.strip(),
+        "model": model,
+        "provider": "fireworks",
+    }

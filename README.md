@@ -58,10 +58,12 @@ The primary objective is to read unseen natural-language tasks, process them, an
         |
         v
 [ /output/results.json ]
-4. Deep Dive: Routing Policy & Heuristics
+```
+
+## 4. Deep Dive: Routing Policy & Heuristics
 The core of the cost-saving mechanism is the Routing Policy. Use the cheapest path that is statistically likely to pass the judge.
 
-4.1 Local Handlers (Zero Token Cost)
+### 4.1 Local Handlers (Zero Token Cost)
 Route to local, rule-based Python functions if the prompt matches these criteria:
 
 Sentiment Classification: Looks for "positive, negative, or neutral". Uses simple keyword weighting or a lightweight local library like VADER or TextBlob (if allowed).
@@ -72,7 +74,7 @@ Simple Summaries: Looks for "TL;DR" or "one sentence" combined with low word cou
 
 Formatting: e.g., "Convert this CSV to JSON".
 
-4.2 Fireworks Handlers (Token Intensive)
+### 4.2 Fireworks Handlers (Token Intensive)
 Route to the cloud if the risk of failure is high or reasoning is required:
 
 Math & Logic: Presence of +, -, *, /, %, calculate, sum, deduce, logic.
@@ -81,10 +83,10 @@ Code Execution/Debugging: Presence of code blocks (```), def, class, debug, trac
 
 Long Context: Any prompt exceeding ~150 words (too complex for reliable local heuristics).
 
-4.3 Conflict Resolution
+### 4.3 Conflict Resolution
 If a prompt triggers multiple heuristics (e.g., Code + Summarization), always default to the riskier/harder category (Fireworks). It is better to spend a few tokens than fail the accuracy gate entirely.
 
-5. Configuration & Environment Variables
+## 5. Configuration & Environment Variables
 The agent must be entirely dynamically configured via OS environment variables.
 
 Code snippet
@@ -104,14 +106,14 @@ If ALLOWED_MODELS contains multiple options, map them to complexity tiers. Use t
 
 If only one model is provided, use it universally for all external calls.
 
-6. Error Handling & Fallbacks
+## 6. Error Handling & Fallbacks
 API Timeouts: If a Fireworks call approaches the 30-second task limit, catch the TimeoutError. Do not crash the entire run. Log the error and return a safe fallback string (e.g., "Unable to process task due to complexity.") to ensure subsequent tasks are still processed.
 
 JSON Malformation: If the LLM returns broken JSON when JSON is requested, attempt one automatic repair (using local regex) before falling back.
 
 Missing Keys: If ALLOWED_MODELS or FIREWORKS_API_KEY is missing on boot, exit immediately with a non-zero code to fail fast.
 
-7. Execution & Build Plan
+## 7. Execution & Build Plan
 Phase 1: Local Setup
 Implement standard Pydantic or Dataclass models for Task input/output.
 

@@ -16,15 +16,30 @@ def _model() -> Llama:
     )
 
 
-def generate(prompt: str) -> str:
+def generate(prompt: str) -> dict[str, str]:
+    model_path = os.environ.get("LOCAL_MODEL_PATH", "/models/qwen3.gguf")
     response = _model().create_chat_completion(
         messages=[
-            {"role": "system", "content": "Answer accurately and concisely. Return only the requested answer. /no_think"},
-            {"role": "user", "content": prompt},
+            {
+                "role": "system",
+                "content": (
+                    "Answer accurately and concisely. Return only the requested "
+                    "answer. Avoid unnecessary Markdown headings, bold text, "
+                    "LaTeX, explanations, or routing metadata because they "
+                    "consume Fireworks tokens. Code answers may contain normal "
+                    "source code with newline characters inside the string."
+                ),
+                "thinking": {"type": "disabled"}
+            },
+            {"role": "user", "content": f"{prompt}\n/no_think"},
         ],
         temperature=0,
     )
     answer = response["choices"][0]["message"]["content"]
     if not answer or not answer.strip():
         raise RuntimeError("Local model returned no answer")
-    return answer.strip()
+    return {
+        "answer": answer.strip(),
+        "model": os.environ.get("LOCAL_MODEL_NAME", os.path.basename(model_path)),
+        "provider": "local",
+    }

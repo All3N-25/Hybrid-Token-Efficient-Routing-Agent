@@ -28,6 +28,7 @@ COPY --from=builder /qwen3.gguf /models/qwen3.gguf
 ENV INPUT_PATH=/input/tasks.json \
     OUTPUT_PATH=/output/results.json \
     LOCAL_MODEL_PATH=/models/qwen3.gguf \
+    LOCAL_MODEL_NAME=Qwen3-8B-Q4_K_M \
     LOCAL_MODEL_CONTEXT=4096 \
     LOCAL_MODEL_THREADS=4
 
