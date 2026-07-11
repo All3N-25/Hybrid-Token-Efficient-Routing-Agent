@@ -16,8 +16,7 @@ def answer_task(task: Task) -> str:
     if task.complexity == "Complex" or FIREWORKS_CATEGORIES.intersection(task.categories):
         return fireworks.generate(task.prompt, task.categories)
     if task.complexity == "Simple":
-        return
-        #return local.generate(task.prompt)
+        return local.generate(task.prompt)
     raise ValueError(f"Unknown complexity: {task.complexity}")
 
 if __name__ == "__main__":
@@ -52,3 +51,4 @@ if __name__ == "__main__":
         })
 
     writeResult(results)
+    print(fireworks.fireworks_tokens_used)

@@ -1,3 +1,30 @@
-"""
-Connects to the Local LLM hosted by AMD.
-"""
+"""Generate answers with the Qwen2 model bundled in the container."""
+
+import os
+from functools import lru_cache
+
+from llama_cpp import Llama
+
+
+@lru_cache(maxsize=1)
+def _model() -> Llama:
+    return Llama(
+        model_path=os.environ.get("LOCAL_MODEL_PATH", "/models/qwen2.gguf"),
+        n_ctx=int(os.environ.get("LOCAL_MODEL_CONTEXT", "4096")),
+        n_threads=int(os.environ.get("LOCAL_MODEL_THREADS", "4")),
+        verbose=False,
+    )
+
+
+def generate(prompt: str) -> str:
+    response = _model().create_chat_completion(
+        messages=[
+            {"role": "system", "content": "Answer accurately and concisely. Return only the requested answer."},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0,
+    )
+    answer = response["choices"][0]["message"]["content"]
+    if not answer or not answer.strip():
+        raise RuntimeError("Local model returned no answer")
+    return answer.strip()

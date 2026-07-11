@@ -22,6 +22,8 @@ CATEGORY_MODEL_MAP = {
 }
 DEFAULT_MODEL = "minimax-m3"
 
+fireworks_tokens_used = 0
+
 def select_model(categories: list[str]) -> str:
     # Only selects the model that matches the first category.
     cat_set = set(categories)
@@ -33,6 +35,7 @@ def select_model(categories: list[str]) -> str:
     return DEFAULT_MODEL
 
 def generate(prompt: str, categories: list[str]) -> str:
+    global fireworks_tokens_used
     if not models:
         raise RuntimeError("ALLOWED_MODELS is empty")
 
@@ -71,8 +74,6 @@ def generate(prompt: str, categories: list[str]) -> str:
         method="POST",
     )
 
-    print("URL:", request.full_url)
-
     try:
         with urlopen(request, timeout=120) as response:
             body = json.load(response)
@@ -84,6 +85,10 @@ def generate(prompt: str, categories: list[str]) -> str:
 
     choice = body["choices"][0]
     answer = choice["message"].get("content")
+    usage = body.get("usage", {})
+    fireworks_tokens_used += int(usage.get("total_tokens", 0))
+    print("FIREWORKS TOKEN USAGE:", usage)
+    print("TOTAL FIREWORKS TOKENS USED:", fireworks_tokens_used)
 
     if not isinstance(answer, str) or not answer.strip():
         raise RuntimeError(
