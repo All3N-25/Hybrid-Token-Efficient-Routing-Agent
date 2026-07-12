@@ -7,7 +7,7 @@ The agent reads prompts from `/input/tasks.json`, routes each task to either the
 ### 1. Pull the image
 
 ```bash
-docker pull all3n25/hybrid-routing-agent:latest
+docker pull all3n25/hybrid-routing-agent:final
 ```
 
 ### 2. Create the input and output directories
@@ -44,7 +44,7 @@ docker run --rm \
   --env-file .env \
   -v "$PWD/input:/input:ro" \
   -v "$PWD/output:/output" \
-  all3n25/hybrid-routing-agent:latest
+  all3n25/hybrid-routing-agent:final
 ```
 
 The container exits after processing every task. A successful run returns exit code `0`.

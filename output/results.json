@@ -1,73 +1,61 @@
 [
     {
-        "task_id": "math-1",
-        "answer": "5888",
+        "task_id": "T01",
+        "answer": "<think>\n\n</think>\n\nRed, Green, Blue  \nDisplays use RGB because it allows for additive color mixing to create a wide range of colors, which is essential for electronic screens. RYB is used in traditional art for subtractive color mixing with pigments.",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
+    },
+    {
+        "task_id": "T01b",
+        "answer": "<think>\n\n</think>\n\nMachine learning uses algorithms to find patterns in data and make decisions with minimal human intervention. It includes various techniques like decision trees, support vector machines, and random forests. Deep learning is a subset of machine learning that uses neural networks with many layers (deep neural networks) to model complex patterns in data, especially in unstructured data like images, text, and sound.",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
+    },
+    {
+        "task_id": "T01c",
+        "answer": "<think>\n\n</think>\n\nRAM is temporary memory used for running programs and storing data while the computer is on. ROM is non-volatile memory used to store firmware and essential instructions needed for booting up the computer.",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
+    },
+    {
+        "task_id": "T02",
+        "answer": "1,072",
         "model": "minimax-m3",
         "provider": "fireworks"
     },
     {
-        "task_id": "math-2",
-        "answer": "84 rupees",
+        "task_id": "T02b",
+        "answer": "Sugar for 30 cookies: 1.875 cups (or 1 7/8 cups)\nTotal cost: $4.50",
         "model": "minimax-m3",
         "provider": "fireworks"
     },
     {
-        "task_id": "math-3",
-        "answer": "20",
+        "task_id": "T03",
+        "answer": "<think>\n\n</think>\n\nMixed. The review contains both negative aspects (late delivery and damaged packaging) and positive aspects (item worked perfectly and quick customer support).",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
+    },
+    {
+        "task_id": "T03b",
+        "answer": "<think>\n\n</think>\n\nMixed  \nThe sentiment is mixed as the user expresses dissatisfaction with the packaging and missing manual but praises the device's performance and ease of setup.",
+        "model": "Qwen3-8B-Q4_K_M",
+        "provider": "local"
+    },
+    {
+        "task_id": "T04",
+        "answer": "Machine learning is increasingly used in healthcare for diagnosis, treatment planning, and patient monitoring, but concerns about interpretability, privacy, liability, and algorithmic bias persist. Regulatory frameworks have not kept pace with deployment, creating uncertainty for providers and developers.",
         "model": "minimax-m3",
         "provider": "fireworks"
     },
     {
-        "task_id": "mcq-1",
-        "answer": "<think>\n\n</think>\n\nB) 17",
+        "task_id": "T04b",
+        "answer": "<think>\n\n</think>\n\n- Remote work changes global company operations and improves work-life balance.  \n- Challenges include collaboration, culture, and blurred work-life boundaries.  \n- Companies invest in digital tools and redesign office spaces for social and creative purposes.",
         "model": "Qwen3-8B-Q4_K_M",
         "provider": "local"
     },
     {
-        "task_id": "mcq-2",
-        "answer": "<think>\n\n</think>\n\nC) Au",
-        "model": "Qwen3-8B-Q4_K_M",
-        "provider": "local"
-    },
-    {
-        "task_id": "qa-1",
-        "answer": "<think>\n\n</think>\n\nTokyo",
-        "model": "Qwen3-8B-Q4_K_M",
-        "provider": "local"
-    },
-    {
-        "task_id": "qa-2",
-        "answer": "<think>\n\n</think>\n\nMars",
-        "model": "Qwen3-8B-Q4_K_M",
-        "provider": "local"
-    },
-    {
-        "task_id": "extract-1",
-        "answer": "<think>\n\n</think>\n\n1998, 2004, 2015",
-        "model": "Qwen3-8B-Q4_K_M",
-        "provider": "local"
-    },
-    {
-        "task_id": "code-1",
-        "answer": "def add(a, b):\n    return a + b",
-        "model": "kimi-k2p7-code",
-        "provider": "fireworks"
-    },
-    {
-        "task_id": "summary-1",
-        "answer": "<think>\n\n</think>\n\nPhotosynthesis is the process by which green plants use sunlight to convert carbon dioxide and water into food, releasing oxygen as a byproduct.",
-        "model": "Qwen3-8B-Q4_K_M",
-        "provider": "local"
-    },
-    {
-        "task_id": "qa-3",
-        "answer": "<think>\n\n</think>\n\nThere are seven continents on Earth.",
-        "model": "Qwen3-8B-Q4_K_M",
-        "provider": "local"
-    },
-    {
-        "task_id": "general-1",
-        "answer": "<think>\n\n</think>\n\nbonjour",
+        "task_id": "T05",
+        "answer": "<think>\n\n</think>\n\nMarch DATE  \nSundar Pichai PERSON  \nGoogle ORGANIZATION  \nZurich LOCATION  \nETH Zurich ORGANIZATION",
         "model": "Qwen3-8B-Q4_K_M",
         "provider": "local"
     }

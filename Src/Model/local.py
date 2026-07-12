@@ -17,7 +17,6 @@ def _model() -> Llama:
 
 
 def generate(prompt: str) -> dict[str, str]:
-    model_path = os.environ.get("LOCAL_MODEL_PATH", "/models/qwen3.gguf")
     response = _model().create_chat_completion(
         messages=[
             {
@@ -40,6 +39,4 @@ def generate(prompt: str) -> dict[str, str]:
         raise RuntimeError("Local model returned no answer")
     return {
         "answer": answer.strip(),
-        "model": os.environ.get("LOCAL_MODEL_NAME", os.path.basename(model_path)),
-        "provider": "local",
     }

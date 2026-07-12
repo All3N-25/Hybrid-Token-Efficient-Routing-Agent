@@ -96,6 +96,4 @@ def generate(prompt: str, categories: list[str]) -> dict[str, str]:
         )
     return {
         "answer": answer.strip(),
-        "model": model,
-        "provider": "fireworks",
     }
